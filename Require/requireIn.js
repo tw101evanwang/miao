@@ -11,6 +11,6 @@ function require(fileName) {
   Modfunction(exportss)
   return exportss
 }
-let a = require('/require.js')
+let a = require('./require.js')
 a.chunk()
 a.compact()
