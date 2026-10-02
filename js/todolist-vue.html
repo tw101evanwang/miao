@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>todolist-vue</title>
+</head>
+<style>
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 80px;
+    color: #b83f45;
+    font-weight: 200;
+  }
+
+  .newtodo {
+    height: 65px;
+    width: 600px;
+    font-size: 24px;
+    background-color: #ca7373;
+  }
+
+  main {
+    position: relative;
+  }
+
+  .allinput {
+    position: absolute;
+    bottom: 100%;
+    width: 40px;
+    height: 60px;
+  }
+</style>
+
+<body>
+  <aside></aside>
+  <section>
+    <header>
+      <a href="">
+        <h1>todos</h1>
+      </a>
+      <input type="text" class="newtodo" value="">
+    </header>
+    <main class="main">
+      <div>
+        <input type="checkbox" class="allinput">
+      </div>
+      <ul class="todolist"></ul>
+    </main>
+    <footer>
+      <span></span>
+      <ul></ul>
+    </footer>
+  </section>
+  <footer></footer>
+  <script>
+    let allinput = document.querySelector('.allinput')
+    let newtodo = document.querySelector('.newtodo')
+    let todolist = document.querySelector('.todolist')
+    newtodo.addEventListener('input', function () {
+
+    })
+  </script>
+</body>
+
+</html>
