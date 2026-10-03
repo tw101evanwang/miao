@@ -16,14 +16,14 @@
   <div>
     <div style="display: flex;">
       <button id="createBtn" style="cursor: pointer;">新建笔记</button>
-      <select name="notes" id="noteSelect" style="width: 70px;padding-right: 18px;"></select>
+      <select name="notes" id="noteSelect" style="width: 100px;padding-right: 18px;"></select>
       <div style="display: flex;">
         <label for="fileInput" style="background-color: red;">导入</label>
         <input type="file" name="" id="fileInput" style="display: none;">
         <label for="" onclick="exportNotes()" style="background-color: tan;">导出</label>
       </div>
     </div>
-    <textarea name="content" id="contentArea" style="width: 200px;height: 100px;"></textarea>
+    <textarea name="content" id="contentArea" style="width: 230px;height: 100px;"></textarea>
   </div>
   <script>
     let createBtn = document.getElementById('createBtn')
@@ -32,6 +32,7 @@
     let fileInput = document.querySelector('#fileInput')
     let notes = []
     let currentId = null
+    //从浏览器的本地存储中加载之前保存的数据
     function loadStorage() {
       let data = localStorage.getItem('notes')
       if (!data) {
