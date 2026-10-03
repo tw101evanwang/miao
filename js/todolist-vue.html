@@ -79,14 +79,16 @@
     function render() {
       todolist.innerHTML = ''
       todos.forEach((it, index) => {
+        let li = document.createElement('li')
         let checkbox = document.createElement('input')
+        let button = document.createElement('button')
         checkbox.type = 'checkbox'
         checkbox.checked = it.completed
         checkbox.addEventListener('change', function () {
-          it.completed = true
+          it.completed = checkbox.checked
+          updateTodoStyle(li, it.completed)
         })
-        let li = document.createElement('li')
-        let button = document.createElement('button')
+        updateTodoStyle(li, it.completed)
         button.textContent = '删除'
         button.addEventListener('click', function () {
           todos.splice(index, 1)
@@ -96,6 +98,19 @@
         todolist.append(li)
       })
     }
+    function updateTodoStyle(li, completed) {
+      if (completed) {
+        li.style.textDecoration = 'line-through'
+      } else {
+        li.style.textDecoration = 'none'
+      }
+    }
+    allinput.addEventListener('change', function () {
+      todos.forEach((it) => {
+        it.completed = allinput.checked
+      })
+      render()
+    })
   </script>
 </body>
 
