@@ -42,7 +42,7 @@
   <aside></aside>
   <section>
     <header>
-      <a href="">
+      <a href="https://www.google.com">
         <h1>todos</h1>
       </a>
       <input type="text" class="newtodo" value="">
@@ -64,9 +64,38 @@
     let allinput = document.querySelector('.allinput')
     let newtodo = document.querySelector('.newtodo')
     let todolist = document.querySelector('.todolist')
-    newtodo.addEventListener('input', function () {
-
+    newtodo.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        let val = newtodo.value.trim()
+        if (val) {
+          todos.push({ text: val, completed: false })
+          newtodo.value = ''
+        } else {
+          return
+        }
+        render()
+      }
     })
+    function render() {
+      todolist.innerHTML = ''
+      todos.forEach((it, index) => {
+        let checkbox = document.createElement('input')
+        checkbox.type = 'checkbox'
+        checkbox.checked = it.completed
+        checkbox.addEventListener('change', function () {
+          it.completed = true
+        })
+        let li = document.createElement('li')
+        let button = document.createElement('button')
+        button.textContent = '删除'
+        button.addEventListener('click', function () {
+          todos.splice(index, 1)
+          render()
+        })
+        li.append(checkbox, it.text, button)
+        todolist.append(li)
+      })
+    }
   </script>
 </body>
 
