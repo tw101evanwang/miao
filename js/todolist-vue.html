@@ -60,15 +60,21 @@
   </section>
   <footer></footer>
   <script>
-    let todos = []
     let allinput = document.querySelector('.allinput')
     let newtodo = document.querySelector('.newtodo')
     let todolist = document.querySelector('.todolist')
+    let todos = []
+    let savedTodos = localStorage.getItem('todos')
+    if (savedTodos) {
+      todos = JSON.parse(savedTodos)
+      render()
+    }
     newtodo.addEventListener('keydown', function (event) {
       if (event.key === 'Enter') {
         let val = newtodo.value.trim()
         if (val) {
           todos.push({ text: val, completed: false })
+          localStorage.setItem('todos', JSON.stringify(todos))
           newtodo.value = ''
         } else {
           return
@@ -86,12 +92,14 @@
         checkbox.checked = it.completed
         checkbox.addEventListener('change', function () {
           it.completed = checkbox.checked
+          updateAllInput()
           updateTodoStyle(li, it.completed)
         })
         updateTodoStyle(li, it.completed)
         button.textContent = '删除'
         button.addEventListener('click', function () {
           todos.splice(index, 1)
+          updateAllInput()
           render()
         })
         li.append(checkbox, it.text, button)
@@ -111,6 +119,15 @@
       })
       render()
     })
+    function updateAllInput() {
+      if (todos.length === 0) {
+        allinput.checked = false
+      } else {
+        allinput.checked = todos.every((it) => {
+          return it.completed
+        })
+      }
+    }
   </script>
 </body>
 
