@@ -67,6 +67,7 @@
     let savedTodos = localStorage.getItem('todos')
     if (savedTodos) {
       todos = JSON.parse(savedTodos)
+      updateAllInput()
       render()
     }
     newtodo.addEventListener('keydown', function (event) {
@@ -74,7 +75,7 @@
         let val = newtodo.value.trim()
         if (val) {
           todos.push({ text: val, completed: false })
-          localStorage.setItem('todos', JSON.stringify(todos))
+          saveTodos()
           newtodo.value = ''
         } else {
           return
@@ -92,6 +93,7 @@
         checkbox.checked = it.completed
         checkbox.addEventListener('change', function () {
           it.completed = checkbox.checked
+          saveTodos()
           updateAllInput()
           updateTodoStyle(li, it.completed)
         })
@@ -99,6 +101,7 @@
         button.textContent = '删除'
         button.addEventListener('click', function () {
           todos.splice(index, 1)
+          saveTodos()
           updateAllInput()
           render()
         })
@@ -117,6 +120,7 @@
       todos.forEach((it) => {
         it.completed = allinput.checked
       })
+      saveTodos()
       render()
     })
     function updateAllInput() {
@@ -127,6 +131,9 @@
           return it.completed
         })
       }
+    }
+    function saveTodos() {
+      localStorage.setItem('todos', JSON.stringify(todos))
     }
   </script>
 </body>
