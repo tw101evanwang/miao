@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>todos-vue</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const app = Vue.createApp({
+      template: `
+      {{ message }}
+       <button @click="message = 'Hello Vue'">修改</button>
+       <ul>
+        <li v-for='todo in todos'>
+          {{ todo.text }}
+        </li>
+       </ul>
+       `,
+      data() {
+        return {
+          todos: [
+            { text: '吃饭', completed: false },
+            { text: '睡觉', completed: true },
+            { text: '打游戏', completed: false }
+          ],
+          message: '你好 Vue',
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+
+</body>
+
+</html>
