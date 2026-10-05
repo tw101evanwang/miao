@@ -9,32 +9,49 @@
 
 <body>
   <div id="app"></div>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
   <script>
-    const app = Vue.createApp({
+    new Vue({
+      el: '#app',
       template: `
-      {{ message }}
-       <button @click="message = 'Hello Vue'">修改</button>
-       <ul>
-        <li v-for='todo in todos'>
-          {{ todo.text }}
-        </li>
-       </ul>
-       `,
+      <div>
+        <button @click="addTodo">测试</button>
+        <input
+          v-model='newTodo'
+          placeholder='What needs to be done?'
+          @keydown.enter='addTodo'
+        >
+        <ul>
+          <li v-for='todo in todos'>
+            {{ todo.title }} - {{ todo.completed }}
+            <button>&times;</button>
+          </li>
+        </ul>
+      </div>
+        `,
       data() {
         return {
           todos: [
-            { text: '吃饭', completed: false },
-            { text: '睡觉', completed: true },
-            { text: '打游戏', completed: false }
+            { id: 1, title: '吃饭', completed: false },
+            { id: 2, title: '睡觉', completed: true },
+            { id: 3, title: '打游戏', completed: false }
           ],
-          message: '你好 Vue',
+          newTodo: '',
+        }
+      },
+      methods: {
+        addTodo() {
+          let todo = {
+            id: 1,
+            title: this.newTodo,
+            completed: true,
+          }
+          this.todos.push(todo)
+          console.log(this.todos)
         }
       }
     })
-    app.mount('#app')
   </script>
-
 </body>
 
 </html>
