@@ -15,40 +15,97 @@
       el: '#app',
       template: `
       <div>
-        <button @click="addTodo">测试</button>
-        <input
-          v-model='newTodo'
-          placeholder='What needs to be done?'
-          @keydown.enter='addTodo'
-        >
+        <input v-model='newTodo' placeholder='What needs to be done?' @keydown.enter='addTodo'>
+        <input type='checkbox' @click='toggleAll' v-model='allDone'>
+
+
         <ul>
-          <li v-for='todo in todos'>
+          <li v-for='(todo, idx) in  filteredTodos'>
+            <input type="checkbox" v-model='todo.completed'>
             {{ todo.title }} - {{ todo.completed }}
-            <button>&times;</button>
+            <button @click='deleteTodo(todo.id)'>&times;</button>
           </li>
         </ul>
+
+
+        <span>{{ activeCount }} item{{ activeCount === 1 ? '' : 's' }} left</span>
+        <label><input type='radio' value='all' v-model='filter'>All</label>
+        <label><input type='radio' value='active' v-model='filter'>Active</label>
+        <label><input type='radio' value='completed' v-model='filter'>Completed</label>
+        <button @click='clearCompleted'>Clear completed</button>
       </div>
         `,
       data() {
+        let todos = []
+        let next = todos.length > 0 ? todos[todos.length - 1].id : 0
         return {
-          todos: [
-            { id: 1, title: '吃饭', completed: false },
-            { id: 2, title: '睡觉', completed: true },
-            { id: 3, title: '打游戏', completed: false }
-          ],
+          todos: todos,
           newTodo: '',
+          next: next,
+          filter: 'all',
         }
       },
       methods: {
         addTodo() {
+          if (this.newTodo.trim() === '') {
+            return
+          }
+          this.next++
           let todo = {
-            id: 1,
+            id: this.next,
             title: this.newTodo,
-            completed: true,
+            completed: false,
           }
           this.todos.push(todo)
-          console.log(this.todos)
-        }
+          //title: this.newTodo文字的前后的空格不会消失，但是页面显示是没有的，数据里面有空格
+          console.log(JSON.stringify(this.newTodo))
+          this.newTodo = ''
+        },
+        deleteTodo(id) {
+          //使用每个Todo自带的id删除时，v-for="(todo, idx) in filteredTodos" 里的idx是filteredTodos当前数组的索引，不是原始todos的索引。如果拿这个idx去操作原始的todos，筛选后就可能删除错误。this.todos.splice(idx, 1)
+          let idx = this.todos.findIndex(it => it.id === id)
+          this.todos.splice(idx, 1)
+        },
+        clearCompleted() {
+          this.todos = this.todos.filter(it => it.completed === false)
+        },
+        toggleAll() {
+          let allCompleted = this.todos.every(it => it.completed === true)
+          if (allCompleted) {
+            this.todos.forEach(it => {
+              it.completed = false
+            })
+          } else {
+            this.todos.forEach(it => {
+              it.completed = true
+            })
+          }
+        },
+      },
+      computed: {
+        activeCount() {
+          return this.todos.filter((it) => it.completed === false).length
+        },
+        filteredTodos() {
+          if (this.filter === 'all') {
+            return this.todos
+          } else if (this.filter === 'active') {
+            return this.todos.filter((it) => it.completed === false)
+          } else if (this.filter === 'completed') {
+            return this.todos.filter((it) => it.completed === true)
+          }
+        },
+        allDone: {
+          get() {
+            //刷新的时候，全选是打勾的状态，因为空数组调用every()会返回true
+            return this.todos.length > 0 && this.todos.every(it => it.completed === true)
+          },
+          set(value) {
+            this.todos.forEach(it => {
+              it.completed = value
+            })
+          }
+        },
       }
     })
   </script>
