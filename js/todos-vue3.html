@@ -8,12 +8,11 @@
 </head>
 
 <body>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <div id="app">
     {{ message }}
   </div>
-  <script>
-    const { createApp } = Vue
+  <script type="module">
+    import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
     createApp({
       data() {
         return {
