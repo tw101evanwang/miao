@@ -15,9 +15,10 @@
     <input type="checkbox" class="alltoggle"></input>
     <input type="text" v-model="input" placeholder="What needs to be done?" @keydown.enter='addtodo()'>
     <ul class="todolist">
-      <li>
+      <li v-for="(item, index) in this.todos">
         <input type="checkbox" class="toggle"></input>
-        <label for=""></label>
+        <label for="">{{ item.title }}</label>
+        <button @click="deleteTodo(index)">&times;</button>
       </li>
     </ul>
     <span class="todocount"></span>
@@ -43,9 +44,17 @@
           //空字符串''在条件判断中会被当成false,所以要取反
           if (!this.input.trim()) return
           //this.todos.push(this.input)这个push的带有空格，是原始字符串
-          this.todos.push(this.input.trim())
+          let todo = {
+            title: this.input.trim(),
+            completed: false,
+          }
+          this.todos.push(todo)
           this.input = ''
           console.log(this.todos)
+        },
+        deleteTodo(index) {
+          //this.todos = this.todos.filter((item, i) => i !== index)
+          this.todos.splice(index, 1)
         }
       },
       computed: {
