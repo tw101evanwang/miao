@@ -9,7 +9,24 @@
 
 <body>
   <div id="app">
-    {{ message }}
+    <a href="https://ip.sb/">
+      <h1>{{ message }}</h1>
+    </a>
+    <input type="checkbox" class="alltoggle"></input>
+    <input type="text" v-model="input" placeholder="What needs to be done?" @keydown.enter='addtodo()'>
+    <ul class="todolist">
+      <li>
+        <input type="checkbox" class="toggle"></input>
+        <label for=""></label>
+      </li>
+    </ul>
+    <span class="todocount"></span>
+    <ul>
+      <li>All</li>
+      <li>Active</li>
+      <li>Completed</li>
+    </ul>
+    <button class="clearcompleted">Clear completed</button>
   </div>
   <script type="module">
     import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
@@ -17,11 +34,19 @@
       data() {
         return {
           message: 'todos',
+          input: '',
           todos: [],
         }
       },
       methods: {
-
+        addtodo() {
+          //空字符串''在条件判断中会被当成false,所以要取反
+          if (!this.input.trim()) return
+          //this.todos.push(this.input)这个push的带有空格，是原始字符串
+          this.todos.push(this.input.trim())
+          this.input = ''
+          console.log(this.todos)
+        }
       },
       computed: {
 
