@@ -5,35 +5,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>todos-vue3</title>
+  <style>
+    .todolist {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    button {
+      border: none;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app">
-    <a href="https://ip.sb/">
+    <a :href="url">
       <h1>{{ message }}</h1>
     </a>
     <input type="checkbox" class="alltoggle"></input>
     <input type="text" v-model="input" placeholder="What needs to be done?" @keydown.enter='addtodo()'>
     <ul class="todolist">
-      <li v-for="(item, index) in this.todos">
-        <input type="checkbox" class="toggle"></input>
+      <!-- 数组在JavaScript中也是一种特殊的对象,数组的元素可以通过索引访问,数组的索引用作了key -->
+      <li v-for="(item, index) in todos" :key="index">
+        <input type="checkbox" class="toggle" v-model="item.completed"></input>
         <label for="">{{ item.title }}</label>
+        <span>{{ item.completed }}</span>
         <button @click="deleteTodo(index)">&times;</button>
       </li>
     </ul>
-    <span class="todocount"></span>
-    <ul>
-      <li>All</li>
-      <li>Active</li>
-      <li>Completed</li>
-    </ul>
-    <button class="clearcompleted">Clear completed</button>
+    <footer>
+      <span class="todocount">item left</span>
+      <label>
+        <input type="radio" value="all">All
+      </label>
+      <label>
+        <input type="radio" value="active">Active
+      </label>
+      <label>
+        <input type="radio" value="completed">Completed
+      </label>
+      <button class="clearcompleted">Clear completed</button>
+    </footer>
   </div>
   <script type="module">
     import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
-    createApp({
+    let app = createApp({
       data() {
         return {
+          url: 'https://ip.sb/',
           message: 'todos',
           input: '',
           todos: [],
@@ -60,7 +79,8 @@
       computed: {
 
       }
-    }).mount('#app')
+    })
+    app.mount('#app')
   </script>
 </body>
 
