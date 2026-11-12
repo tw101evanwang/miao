@@ -10,6 +10,7 @@
       list-style: none;
       padding-left: 0;
     }
+
     button {
       border: none;
     }
@@ -26,7 +27,7 @@
         <a :href="url">
           <h1>{{ message }}</h1>
         </a>
-        <input type="checkbox" class="alltoggle"></input>
+        <input type="checkbox" @click="alltoggle" :checked="this.todos.length > 0 && this.todos.every(it => it.completed === true)"></input>
         <input type="text" v-model="input" placeholder="What needs to be done?" @keydown.enter='addtodo()'>
         <ul class="todolist">
           <!-- 数组在JavaScript中也是一种特殊的对象,数组的元素可以通过索引访问,数组的索引用作了key -->
@@ -76,7 +77,15 @@
         deleteTodo(index) {
           //this.todos = this.todos.filter((item, i) => i !== index)
           this.todos.splice(index, 1)
-        }
+        },
+        alltoggle() {
+          let alltrue = this.todos.every(it => it.completed === true)
+          if (alltrue) {
+            this.todos.forEach(it => it.completed = false)
+          } else {
+            this.todos.forEach(it => it.completed = true)
+          }
+        },
       },
       computed: {
         remaincount() {
