@@ -79,8 +79,7 @@
           this.todos.splice(index, 1)
         },
         alltoggle() {
-          let alltrue = this.todos.every(it => it.completed === true)
-          if (alltrue) {
+          if (this.todos.every(it => it.completed === true)) {
             this.todos.forEach(it => it.completed = false)
           } else {
             this.todos.forEach(it => it.completed = true)
