@@ -31,27 +31,21 @@
         <input type="text" v-model="input" placeholder="What needs to be done?" @keydown.enter='addtodo()'>
         <ul class="todolist">
           <!-- 数组在JavaScript中也是一种特殊的对象,数组的元素可以通过索引访问,数组的索引用作了key -->
-          <li v-for="(item, index) in todos" :key="index">
-            <input type="checkbox" class="toggle" v-model="item.completed"></input>
+          <li v-for="(item, index) in todos" :key="index" v-show="filter==='all' || filter==='active' && !item.completed || filter==='completed' && item.completed">
+            <input type="checkbox" class="toggle" v-model="item.completed" ></input>
             <label for="">{{ item.title }}</label>
-            <span class='status' :style="{ color: item.completed ? 'green' : 'red' }">{{ item.completed }}</span>
+            <span class='status' :style="{ color: item.completed ? 'green' : 'red' }" >{{ item.completed }}</span>
             <button @click="deleteTodo(index)">&times;</button>
           </li>
         </ul>
         <footer>
+          <!-- v-show切换CSS的display属性，切换速度快；v-if会反复销毁和重建DOM元素，性能开销大 -->
           <span class="todocount"><span>{{  remaincount }}</span> item{{remaincount === 1 ? '' : 's'}} left</span>
-          <label>
-            <input type="radio" value="all">All
-          </label>
-          <label>
-            <input type="radio" value="active">Active
-          </label>
-          <label>
-            <input type="radio" value="completed">Completed
-          </label>
-          <button class="clearcompleted">Clear completed</button>
+          <label><input type="radio" v-model="filter" value="all">All</label>
+          <label><input type="radio" v-model="filter" value="active">Active</label>
+          <label><input type="radio" v-model="filter" value="completed">Completed</label>
+          <button class="clearcompleted" @click="clearcompleted">Clear completed</button>
         </footer>
-        
       </div>
       `,
       data() {
@@ -60,6 +54,7 @@
           message: 'todos',
           input: '',
           todos: [],
+          filter: "all"
         }
       },
       methods: {
@@ -85,10 +80,13 @@
             this.todos.forEach(it => it.completed = true)
           }
         },
+        clearcompleted() {
+          this.todos = this.todos.filter(item => !item.completed)
+        },
       },
       computed: {
         remaincount() {
-          //filter    如果条件判断结果为true，这个元素就被留下.
+          //filter如果条件判断结果为true，这个元素就被留下
           return this.todos.filter(item => !item.completed).length
         }
       }
