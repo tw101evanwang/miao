@@ -13,10 +13,10 @@
     import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
     let app = createApp({
       template: /*html*/`
-        <counter></counter>
-        <counter></counter>
-        <counter></counter>
-        <counter></counter>
+        <div><counter :step="3" :start="6"></counter></div>
+        <div><counter :step="4"></counter></div>
+        <div><counter :start="5"></counter></div>
+        <div><counter></counter></div>
       `,
       data() {
         return {
@@ -31,13 +31,33 @@
       }
     })
     app.component('counter', {
+      props: {
+        step: {
+          type: Number,
+          default: 2,
+        },
+        start: {
+          type: Number,
+          default: 2,
+        },
+      },
       template: `
-        <button @click="count++">{{ count }}</button>
+        <button @click="inc">+{{ step }}</button>
+        {{ count }}
+        <button @click="dec">-{{ step }}</button>
       `,
       data() {
         return {
-          count: 1
+          count: this.start ?? 1
         }
+      },
+      methods: {
+        inc() {
+          this.count += this.step
+        },
+        dec() {
+          this.count -= this.step
+        },
       },
     })
     app.mount('#app')
