@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>component</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
 <body>
@@ -17,6 +18,7 @@
         <div><counter :step="4"></counter></div>
         <div><counter :start="5"></counter></div>
         <div><counter></counter></div>
+        <radios></radios>
       `,
       data() {
         return {
@@ -42,9 +44,13 @@
         },
       },
       template: `
-        <button @click="inc">+{{ step }}</button>
-        {{ count }}
-        <button @click="dec">-{{ step }}</button>
+        <div class="inline-flex items-center gap-2 my-1">
+          <button @click="dec" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded cursor-pointer"> -{{ step }}</button >
+          <span class="px-4 py-1 border border-gray-400 rounded-md font-mono font-semibold text-gray-800 bg-gray-50 min-w-[3rem] text-center">
+            {{ count }}
+          </span>
+          <button @click = "inc" class= "px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded cursor-pointer"> +{{ step }}</button>
+        </div>
       `,
       data() {
         return {
@@ -60,8 +66,21 @@
         },
       },
     })
-    app.component('radio', {
+    app.component('radios', {
+      props: {
 
+      },
+      template: `
+
+      `,
+      data() {
+        return {
+          count: this.start ?? 1
+        }
+      },
+      methods: {
+
+      },
     })
     app.mount('#app')
   </script>
