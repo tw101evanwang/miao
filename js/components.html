@@ -45,11 +45,11 @@
       },
       template: `
         <div class="inline-flex items-center gap-2 my-1">
-          <button @click="dec" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded cursor-pointer"> -{{ step }}</button >
-          <span class="px-4 py-1 border border-gray-400 rounded-md font-mono font-semibold text-gray-800 bg-gray-50 min-w-[3rem] text-center">
+          <button @click="dec" class="px-3 py-1 border"> -{{ step }}</button >
+          <span class="px-4 py-1 border">
             {{ count }}
           </span>
-          <button @click = "inc" class= "px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded cursor-pointer"> +{{ step }}</button>
+          <button @click="inc" class="px-3 py-1 border"> +{{ step }}</button>
         </div>
       `,
       data() {
