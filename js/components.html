@@ -18,11 +18,20 @@
         <div><counter :step="4"></counter></div>
         <div><counter :start="5"></counter></div>
         <div><counter></counter></div>
-        <radios ></radios>
+        <radios :slides="images"></radios>
       `,
       data() {
         return {
-
+          images: [
+            {
+              imagelink: "https://www.mi.com/shop/buy?product_id=25802",
+              imageURL: "https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/7308edc0b936bc042f55cbd9fd6e401e.png?thumb=1&w=1226&h=460&f=webp&q=90",
+            },
+            {
+              imagelink: "https://www.mi.com/a/h/96392.html?sign=e4885cfdddf490c17c0144daefa9a787",
+              imageURL: "https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/065dcd3751ebe59fbeb7566d5efc6dd3.jpg?thumb=1&w=1226&h=460&f=webp&q=90",
+            },
+          ]
         }
       },
       methods: {
@@ -68,24 +77,38 @@
     })
     app.component('radios', {
       props: {
-
+        slides: {
+          type: Array,
+          required: true,
+        }
       },
       template: `
-        <div>
-          <button>prev</button>
-          <a href="">
-            <img src="" alt="">
+        <div class="border w-[600px] h-[200px] relative">
+          <button @click="prev" class="absolute top-1/2 -translate-y-1/2 left-2 bg-white/80">prev</button>
+          <a :href="slides[i].imagelink" class="block w-full h-full">
+            <img :src="slides[i].imageURL" alt="" class="block w-full h-full">
           </a>
-          <button>next</button>
+          <button @click="next" class="absolute top-1/2 -translate-y-1/2 right-2 bg-white/80">next</button>
         </div>      
       `,
       data() {
         return {
-
+          i: 0,
         }
       },
       methods: {
-
+        prev() {
+          this.i--
+          if (this.i === -1) {
+            this.i = this.slides.length - 1
+          }
+        },
+        next() {
+          this.i++
+          if (this.i === this.slides.length) {
+            this.i = 0
+          }
+        },
       },
     })
     app.mount('#app')
