@@ -18,7 +18,7 @@
         <div><counter :step="4"></counter></div>
         <div><counter :start="5"></counter></div>
         <div><counter></counter></div>
-        <radios></radios>
+        <radios ></radios>
       `,
       data() {
         return {
@@ -45,11 +45,11 @@
       },
       template: `
         <div class="inline-flex items-center gap-2 my-1">
-          <button @click="dec" class="px-3 py-1 border"> -{{ step }}</button >
-          <span class="w-12 py-1 border text-center">
+          <button @click="dec" class="px-3 py-1 border hover:bg-sky-200"> -{{ step }}</button >
+          <span class="w-12 py-1 border text-center hover:bg-sky-200">
             {{ count }}
           </span>
-          <button @click="inc" class="px-3 py-1 border"> +{{ step }}</button>
+          <button @click="inc" class="px-3 py-1 border hover:bg-sky-200"> +{{ step }}</button>
         </div>
       `,
       data() {
@@ -71,11 +71,17 @@
 
       },
       template: `
-
+        <div>
+          <button>prev</button>
+          <a href="">
+            <img src="" alt="">
+          </a>
+          <button>next</button>
+        </div>      
       `,
       data() {
         return {
-          count: this.start ?? 1
+
         }
       },
       methods: {
