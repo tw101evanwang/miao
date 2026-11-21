@@ -14,11 +14,13 @@
     import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
     let app = createApp({
       template: /*html*/`
+      <div>
         <div><counter :step="3" :start="6"></counter></div>
         <div><counter :step="4"></counter></div>
         <div><counter :start="5"></counter></div>
         <div><counter></counter></div>
         <radios :slides="images" autoplay :interval="500"></radios>
+      </div>
       `,
       data() {
         return {
